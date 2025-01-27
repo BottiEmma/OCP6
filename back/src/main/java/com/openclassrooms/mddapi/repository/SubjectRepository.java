@@ -7,5 +7,6 @@ import com.openclassrooms.mddapi.model.Subject;
 
 @Repository
 public interface SubjectRepository extends CrudRepository<Subject, Integer> {
+    public Iterable<Subject> findByTitle(String name);
 
 }

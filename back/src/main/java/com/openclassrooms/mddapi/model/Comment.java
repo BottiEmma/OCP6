@@ -1,4 +1,6 @@
-package.openclassrooms.mddapi.model;
+package com.openclassrooms.mddapi.model;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "comments")

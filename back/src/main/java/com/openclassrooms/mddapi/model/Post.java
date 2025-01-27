@@ -1,4 +1,8 @@
-package.openclassrooms.mddapi.model;
+package com.openclassrooms.mddapi.model;
+
+import jakarta.persistence.*;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "posts")

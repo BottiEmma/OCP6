@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.model.Subject;
+import com.openclassrooms.mddapi.repository.SubjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-package com.openclassrooms.mddapi.repository.SubjectRepository;
 
 @Service
 public class SubjectService {

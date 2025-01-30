@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,8 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
+
+    @Getter
     @Value("${jwt.secret}")
     private String secretKey;
 

@@ -1,8 +1,10 @@
 package com.openclassrooms.mddapi.service;
 
+import com.openclassrooms.mddapi.dto.UserResponse;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,5 +33,16 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getPassword(),
                 Collections.emptyList()
         );
+    }
+
+    public ResponseEntity<UserResponse> getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getUsername());
+        return ResponseEntity.ok(userResponse);
     }
 }

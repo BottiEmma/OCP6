@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import {User} from "../interfaces/user.interface";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(3)]],
@@ -25,11 +26,13 @@ export class LoginComponent {
       this.userService.login(user).subscribe({
         next: (token) => {
           console.log('Login successful, token:', token);
+
           // Store the JWT token
           localStorage.setItem('token', token.token);
-
-          // Navigate to another page (e.g., dashboard)
-          this.router.navigate(['/']);
+          this.userService.getCurrentUser().subscribe((u: User) => {
+            this.authService.login(u, token.token);
+          })
+          this.router.navigate(['/posts']);
         },
         error: (err) => {
           console.error('Login failed', err);

@@ -45,4 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getUsername());
         return ResponseEntity.ok(userResponse);
     }
+
+    public User findById(int userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }

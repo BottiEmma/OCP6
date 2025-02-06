@@ -27,6 +27,14 @@ export class UserService {
     return this.http.get<User>(`${this.apiUrl}/me`);
   }
 
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/${userId}`);
+  }
+
+  public updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/me`, user);
+  }
+
   getUserSubscriptions(): Observable<number[]> {
     return this.http.get<number[]>(`${this.apiUrl}/users/${this.userId}/subscriptions`);
   }

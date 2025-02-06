@@ -1,0 +1,23 @@
+<h2>Profil utilisateur</h2>
+
+<label>Username:</label>
+<input [(ngModel)]="user.username" />
+
+<label>Email:</label>
+<input [(ngModel)]="user.email" />
+
+<label>Mot de passe:</label>
+<input [(ngModel)]="user.password" />
+
+<button (click)="save()">Sauvegarder</button>
+
+<button (click)="logout()">Se déconnecter</button>
+
+<h3>Abonnements</h3>
+<ul>
+  <li *ngFor="let subject of subjects$ | async">
+    {{ subject.title }}
+    <button (click)="unsubscribe(subject.id)">Se désabonner</button>
+  </li>
+</ul>
+

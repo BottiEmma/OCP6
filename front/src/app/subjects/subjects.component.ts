@@ -5,6 +5,7 @@ import {SubjectService} from "../services/subject.service";
 import {UserService} from "../services/user.service";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../services/auth.service";
+import {User} from "../interfaces/user.interface";
 
 @Component({
   selector: 'app-subjects',
@@ -12,7 +13,7 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./subjects.component.scss']
 })
 export class SubjectsComponent implements OnInit {
-  userId!: number;
+  user!: User;
   public subjects$!: Observable<Subject[]>;
   userSubscriptions: number[] = [];
 
@@ -20,16 +21,13 @@ export class SubjectsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subjects$ = this.subjectService.getSubjects();
-    if(this.authService.user.id){
-    this.userId = this.authService.user.id;
-      console.log(this.userId);
-    }else{
-      console.log(this.userId);
-    }
 
+    this.userService.getCurrentUser().subscribe(user => {
+      this.user = user;
 
-    this.subjectService.getUserSubscriptions(this.userId).subscribe(subscriptions => {
-      this.userSubscriptions = subscriptions.map(subject => subject.id);
+      this.subjectService.getUserSubscriptions(this.user.id).subscribe(subscriptions => {
+        this.userSubscriptions = subscriptions.map(subject => subject.id);
+      });
     });
   }
 
@@ -39,10 +37,10 @@ export class SubjectsComponent implements OnInit {
 
   toggleSubscription(subjectId: number): void {
     if (this.isSubscribed(subjectId)) {
-      this.subjectService.unsubscribe(this.userId, subjectId);
+      this.subjectService.unsubscribe(this.user.id, subjectId);
       this.userSubscriptions = this.userSubscriptions.filter(id => id !== subjectId);
     } else {
-      this.subjectService.subscribe(this.userId, subjectId);
+      this.subjectService.subscribe(this.user.id, subjectId);
       this.userSubscriptions.push(subjectId);
     }
   }

@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './login/login.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { DetailComponent } from './posts/detail/detail.component';
 import { FormComponent } from './posts/form/form.component';
@@ -16,9 +16,10 @@ import { SubjectsComponent } from './subjects/subjects.component';
 import { HeaderComponent } from './header/header.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, LoginComponent, DetailComponent, FormComponent, ListComponent, SubjectsComponent, HeaderComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, LoginComponent, DetailComponent, FormComponent, ListComponent, SubjectsComponent, HeaderComponent, RegisterComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +28,8 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     HttpClientModule,
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    FormsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

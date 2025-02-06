@@ -1,6 +1,7 @@
 <ul>
 
   <li *ngFor="let subject of (subjects$ | async); index as i">{{ subject.title }}
+    <p>Description: {{ subject.description }}</p>
     <button (click)="toggleSubscription(subject.id)">
       {{ isSubscribed(subject.id) ? 'Se désabonner' : 'S\'abonner' }}
     </button></li>

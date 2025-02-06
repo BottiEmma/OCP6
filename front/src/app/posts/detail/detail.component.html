@@ -1,1 +1,21 @@
-<p>detail works!</p>
+<ul>
+
+  <li *ngIf="post">{{ post.title }}
+    <p>{{post.date}}</p>
+    <p>{{getUsername(post.authorId)}}</p>
+    <p>{{getSubject(post.subjectId)}}</p>
+    <p>{{post.content}}</p>
+    </li>
+</ul>
+<div class="comments">
+  <h3>Commentaires</h3>
+
+  <div *ngFor="let comment of comments$ | async" class="comment">
+    <p>{{ getCommentUsername(comment.userId) }}</p>
+    <p>{{ comment.content }}</p>
+  </div>
+  <div>
+    <textarea [(ngModel)]="newComment" placeholder="Écrivez ici votre commentaire"></textarea>
+    <button (click)="addComment()">Poster</button>
+  </div>
+</div>

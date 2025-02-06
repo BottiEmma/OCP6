@@ -4,6 +4,7 @@
       <li><a routerLink="/">Home</a></li>
       <li *ngIf="isAuthenticated"><a routerLink="/posts">Articles</a></li>
       <li *ngIf="isAuthenticated"><a routerLink="/subjects">Thèmes</a></li>
+      <li *ngIf="isAuthenticated"><a routerLink="/profile">Profil</a></li>
     </ul>
     <a *ngIf="!isAuthenticated" routerLink="/login">Login</a>
   </nav>

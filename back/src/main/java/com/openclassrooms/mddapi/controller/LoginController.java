@@ -87,4 +87,27 @@ public class LoginController {
         }
         return customUserDetailsService.getUserByEmail(username);
     }
+
+    @PutMapping("/me")
+    public ResponseEntity<User> updateUser(Authentication authentication, @RequestBody User updatedUser) {
+        User user = userRepository.findByEmail(authentication.getName());
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.ok(savedUser);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        User user = customUserDetailsService.findById(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
 }

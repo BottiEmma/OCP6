@@ -37,6 +37,15 @@ public class SubjectService {
         return ResponseEntity.ok(allSubjectsResponse);
     }
 
+    public ResponseEntity<SubjectResponse> getSubject(Integer id) {
+        Subject subject = this.subjectRepository.findById(id).orElse(null);
+        SubjectResponse subjectResponse = new SubjectResponse();
+        subjectResponse.setId(subject.getId());
+        subjectResponse.setDescription(subject.getDescription());
+        subjectResponse.setTitle(subject.getTitle());
+        return ResponseEntity.ok(subjectResponse);
+    }
+
     public void subscribeToSubject(int userId, int subjectId) {
         User user = userRepository.findById(userId).orElseThrow();
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();

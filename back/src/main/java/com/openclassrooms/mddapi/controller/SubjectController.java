@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.AllPostsResponse;
 import com.openclassrooms.mddapi.dto.AllSubjectsResponse;
+import com.openclassrooms.mddapi.dto.SubjectResponse;
 import com.openclassrooms.mddapi.model.Subject;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.service.SubjectService;
@@ -26,6 +27,11 @@ public class SubjectController {
     @GetMapping()
     public ResponseEntity<AllSubjectsResponse> findAll() {
         return this.subjectService.getSubjects();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<SubjectResponse> getSubject(@PathVariable int id) {
+        return this.subjectService.getSubject(id);
     }
 
     @PreAuthorize("isAuthenticated()")

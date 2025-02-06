@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,7 +53,7 @@ public class WebSecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register").permitAll()
-                        .requestMatchers("/posts", "/subjects/**",  "/me", "/subjects/users/*/subscribe/*", "/subjects/users/*/unsubscribe/*", "/subjects/users/*/subscriptions").authenticated()
+                        .requestMatchers(HttpMethod.POST,"/posts", "/posts/*", "/post/*", "/subjects/**", "/users/*",  "/me", "/subjects/users/*/subscribe/*", "/subjects/users/*/unsubscribe/*", "/subjects/users/*/subscriptions").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

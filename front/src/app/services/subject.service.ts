@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Subject} from "../interfaces/subject.interface";
+import {User} from "../interfaces/user.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class SubjectService {
     return this.http.get<{ subjects: Subject[] }>(`${this.apiUrl}/subjects`,  { headers }).pipe(
       map(response => response.subjects)
     );
+  }
+
+  getSubjectById(id: number): Observable<Subject> {
+    return this.http.get<Subject>(`${this.apiUrl}/subjects/${id}`);
   }
 
   subscribe(userId: number, subjectId: number) {

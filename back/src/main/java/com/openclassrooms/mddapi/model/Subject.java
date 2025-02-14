@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
-public class Subject{
+public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,7 @@ public class Subject{
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }

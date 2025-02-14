@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Route} from "@angular/router";
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import {PostService} from "../../services/post.service";
 import {Post} from "../../interfaces/post.interface";
 import {UserService} from "../../services/user.service";
 import {SubjectService} from "../../services/subject.service";
 import {CommentService} from "../../services/comment.service";
 import {Comment} from "../../interfaces/comment.interface";
-import {map, Observable, of, switchMap, take} from "rxjs";
+import {map, Observable, of, switchMap} from "rxjs";
 import {User} from "../../interfaces/user.interface";
 import {AuthService} from "../../services/auth.service";
 
@@ -24,8 +24,11 @@ export class DetailComponent implements OnInit {
   SubjectsMap: Map<number, string> = new Map();
   public comments$!: Observable<Comment[]>;
   newComment: string = '';
+  private cdr: ChangeDetectorRef;
 
-  constructor(private route: ActivatedRoute, private postService: PostService, private commentService: CommentService, private userService: UserService, private authService: AuthService, private subjectService: SubjectService){}
+  constructor(private route: ActivatedRoute, private cdref: ChangeDetectorRef, private postService: PostService, private commentService: CommentService, private userService: UserService, private authService: AuthService, private subjectService: SubjectService){
+    this.cdr = cdref;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -55,9 +58,12 @@ export class DetailComponent implements OnInit {
     this.comments$ = this.commentService.getComments(this.postId);
     this.comments$.subscribe(comments => {
       comments.forEach(comment => {
-        this.userService.getUserById(comment.userId).subscribe(user => {
-          this.userCommentMap.set(comment.userId, user.username);
-        })
+        if (!this.userCommentMap.has(comment.userId)) {
+          this.userService.getUserById(comment.userId).subscribe(user => {
+            this.userCommentMap.set(comment.userId, user.username);
+            this.cdr.detectChanges();
+          })
+        }
       })
     })
   }
@@ -77,7 +83,7 @@ export class DetailComponent implements OnInit {
   addComment(): void {
     this.userService.getCurrentUser().subscribe(user => {
       if (!user) {
-        alert('You must be logged in to comment.');
+        alert('Il faut être connecté pour commenter.');
         return;
       }
 
@@ -94,6 +100,10 @@ export class DetailComponent implements OnInit {
       ).subscribe(updatedComments => {
         this.comments$ = of(updatedComments);
         this.newComment = '';
+        if (!this.userCommentMap.has(this.currentUser.id)) {
+          this.userCommentMap.set(this.currentUser.id, this.currentUser.username);
+          this.cdr.detectChanges();
+        }
       });
     });
   }

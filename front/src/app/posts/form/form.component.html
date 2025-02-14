@@ -1,29 +1,32 @@
+<span ><a class="goback" routerLink="/posts" style="text-decoration:none"><mat-icon [inline]="true">keyboard_backspace</mat-icon></a></span>
 <div class="createPost">
   <h1>Créer un nouvel article</h1>
   <form [formGroup]="postForm" (ngSubmit)="submit()">
-    <div class="form-group">
-      <div class="form-group">
-          <select ngDefaultControl formControlName="subjectId">
-            <option *ngFor="let subject of subjects$ | async" [value]="subject.id">
+
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Sélectionner un thème</mat-label>
+          <mat-select ngDefaultControl formControlName="subjectId">
+            <mat-option *ngFor="let subject of subjects$ | async" [value]="subject.id">
               {{subject.title}}
-            </option>
-          </select>
-      </div>
-      <label for="title">Titre</label>
-      <input type="text" id="title" formControlName="title" />
+            </mat-option>
+      </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-group" appearance="outline">
+        <mat-label>Titre de l'article</mat-label>
+      <input matInput type="text" id="title" formControlName="title" />
       <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched">
         <small class="error">Il faut un titre à l'article.</small>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="content">Contenu</label>
-      <input type="text" id="content" formControlName="content" />
+      </mat-form-field>
+    <mat-form-field class="form-group" appearance="outline">
+      <mat-label>Contenu de l'article</mat-label>
+      <textarea matInput type="text" id="content" formControlName="content" ></textarea>
       <div *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched">
         <small class="error">Il faut écrire le contenu de l'article.</small>
       </div>
-    </div>
+    </mat-form-field>
     <div class="action-buttons">
-      <button type="submit" [disabled]="postForm.invalid">Créer</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="postForm.invalid">Créer</button>
     </div>
   </form>
 </div>

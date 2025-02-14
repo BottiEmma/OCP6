@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Observable, Subject} from "rxjs";
 import {PostService} from "../../services/post.service";
 import {SubjectService} from "../../services/subject.service";
 import {Post} from "../../interfaces/post.interface";

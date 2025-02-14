@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "users")
-public class User{
+public class User {
     @Setter
     @Getter
     @Id

@@ -24,6 +24,10 @@ public class SubjectService {
         this.userRepository = userRepository;
     }
 
+    /**
+     *
+     * @return
+     */
     public ResponseEntity<AllSubjectsResponse> getSubjects() {
         List<Subject> subjects = (List<Subject>) this.subjectRepository.findAll();
         List<SubjectResponse> subjectsResponses = subjects.stream().map(subject -> {
@@ -37,6 +41,11 @@ public class SubjectService {
         return ResponseEntity.ok(allSubjectsResponse);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public ResponseEntity<SubjectResponse> getSubject(Integer id) {
         Subject subject = this.subjectRepository.findById(id).orElse(null);
         SubjectResponse subjectResponse = new SubjectResponse();
@@ -46,6 +55,11 @@ public class SubjectService {
         return ResponseEntity.ok(subjectResponse);
     }
 
+    /**
+     *
+     * @param userId
+     * @param subjectId
+     */
     public void subscribeToSubject(int userId, int subjectId) {
         User user = userRepository.findById(userId).orElseThrow();
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
@@ -53,6 +67,11 @@ public class SubjectService {
         userRepository.save(user);
     }
 
+    /**
+     *
+     * @param userId
+     * @param subjectId
+     */
     public void unsubscribeFromSubject(int userId, int subjectId) {
         User user = userRepository.findById(userId).orElseThrow();
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
@@ -60,6 +79,11 @@ public class SubjectService {
         userRepository.save(user);
     }
 
+    /**
+     *
+     * @param userId
+     * @return
+     */
     public List<Subject> getUserSubscriptions(int userId) {
         return this.subjectRepository.findSubjectsByUserId(userId);
     }

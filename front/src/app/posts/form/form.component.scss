@@ -1,0 +1,28 @@
+mat-form-field {
+  outline-color: #7550ec;
+  width: 100%;
+}
+.goback{
+  display: flex;
+  font-size:55px;
+  margin-top:5px
+}
+
+h1{
+  font-weight: bold;
+}
+
+.createPost{
+  margin: auto;
+  width: 40%;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: stretch;
+}

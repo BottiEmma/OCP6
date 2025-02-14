@@ -24,6 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -35,6 +41,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public ResponseEntity<UserResponse> getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
 

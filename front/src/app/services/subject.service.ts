@@ -15,11 +15,11 @@ export class SubjectService {
   }
 
   getSubjects(): Observable<Subject[]> {
-    const token = localStorage.getItem('token'); // Retrieve the stored token
+    const token = localStorage.getItem('token');
 
     if (!token) {
       console.error('No token found, user is not authenticated!');
-      return new Observable(); // Return an empty observable if no token exists
+      return new Observable();
     }
 
     const headers = new HttpHeaders({
@@ -36,7 +36,6 @@ export class SubjectService {
 
   subscribe(userId: number, subjectId: number) {
     const token = localStorage.getItem('token');
-    console.log("JWT Token:", token); // Debugging
 
     if (!token) {
       console.error("No token found! Authentication required.");
@@ -49,7 +48,7 @@ export class SubjectService {
     this.http.put<{ message: string }>(`http://localhost:8080/subjects/users/${userId}/subscribe/${subjectId}`, {}, { headers })
       .subscribe({
         next: (response) => {
-          console.log(response.message); // Successfully subscribed
+          console.log(response.message);
         },
         error: (err) => {
           console.error("Subscription failed", err);
@@ -59,7 +58,6 @@ export class SubjectService {
 
   unsubscribe(userId: number, subjectId: number) {
     const token = localStorage.getItem('token');
-    console.log("JWT Token:", token); // Debugging
 
     if (!token) {
       console.error("No token found! Authentication required.");
@@ -72,7 +70,7 @@ export class SubjectService {
     this.http.put<{ message: string }>(`http://localhost:8080/subjects/users/${userId}/unsubscribe/${subjectId}`, {}, { headers })
       .subscribe({
         next: (response) => {
-          console.log(response.message); // Successfully subscribed
+          console.log(response.message);
         },
         error: (err) => {
           console.error("Subscription failed", err);

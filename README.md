@@ -1,25 +1,35 @@
-# P6-Full-Stack-reseau-dev
+# Projet 6 Openclassrooms
 
-## Front
+## Base de données : installation
+Vous pouvez d'abord créer et remplir votre base de données avec le script.sql qui se trouve dans back/src/main/resources/.  
+Créez un fichier application.properties dans le répertoire back/src/main/resources/, et ajoutez puis modifiez ces lignes avec les informations de votre base de données :
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+> spring.datasource.url=jdbc:mysql://localhost:PORT/DATABASE NAME  
+> spring.datasource.username=USERNAME    
+> spring.datasource.password=PASSWORD  
+> spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver  
+> spring.jpa.hibernate.ddl-auto=update  
+> spring.jpa.show-sql=true  
+> jwt.secret=C928A33986D1777C596E99EF5CBA6F44EDE214F11C8F4CD31A856788642CDF4C8B9D57EFA66B947B5C5FDA9B287E711DB4DE9D435E8EC2D2BAF1  
+> jwt.expiration=86400000
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Application
+Pour lancer l'application, il faut déjà se déplacer dans le dossier /front et exécuter cette commande pour installer les dépendances :
+```
+npm install
+```
+Ensuite, en revenant à la racine, on fait de même pour dans le dossier /back :
+```
+mvn clean install
+```
 
-### Development server
+Maintenant que l'application est installé, pour la faire fonctionner, il faut, toujours dans le dosser /back, lancer cette commande :
+```
+mvn spring-boot:run
+```
+Puis, dans le dossier front :
+```
+ng serve --open
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-### Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-### Where to start
-
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
-
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
-
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
-
-Good luck!
+Il suffit ensuite de se rendre à l'adresse http://localhost:4200/

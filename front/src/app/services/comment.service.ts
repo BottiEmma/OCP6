@@ -13,11 +13,11 @@ export class CommentService {
   constructor(private http: HttpClient) {}
 
   getComments(postId: String): Observable<Comment[]> {
-    const token = localStorage.getItem('token'); // Retrieve the stored token
+    const token = localStorage.getItem('token'); // Retrouve le token conservé
 
     if (!token) {
       console.error('No token found, user is not authenticated!');
-      return new Observable(); // Return an empty observable if no token exists
+      return new Observable(); // Retourne un observable vide si pas de token
     }
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

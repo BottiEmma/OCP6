@@ -7,5 +7,12 @@ import java.util.List;
 @Getter
 public class AllSubjectsResponse {
     private final List<SubjectResponse> subjects;
-    public AllSubjectsResponse(final List<SubjectResponse> subjects) { this.subjects = subjects; }
+
+    /**
+     * Réponse avec tous les thèmes
+     * @param subjects
+     */
+    public AllSubjectsResponse(final List<SubjectResponse> subjects) {
+        this.subjects = subjects;
+    }
 }

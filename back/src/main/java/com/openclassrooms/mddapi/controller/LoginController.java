@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controller;
 
 import com.openclassrooms.mddapi.dto.LoginRequest;
 import com.openclassrooms.mddapi.dto.RegisterRequest;
-import com.openclassrooms.mddapi.dto.UserResponse;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.JwtTokenProvider;
@@ -14,10 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.logging.*;
 
 import java.util.HashMap;
@@ -35,6 +34,13 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     *
+     * @param authenticationManager
+     * @param jwtTokenProvider
+     * @param customUserDetailsService
+     * @param userRepository
+     */
     @Autowired
     public LoginController(@Lazy AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
@@ -43,9 +49,14 @@ public class LoginController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Authentification de l'utilisateur
+     * @param loginRequest
+     * @return
+     */
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
-        // Authenticate user credentials
+        // authentifie les informations d'indentification de l'utilisateur
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
@@ -54,15 +65,20 @@ public class LoginController {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Generate and return JWT token
+        // Génère et rertourne le token
         String token = jwtTokenProvider.generateToken(authentication);
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Inscription de l'utilisateur
+     * @param registerRequest
+     * @return
+     */
     @PostMapping("/register")
-    public ResponseEntity <Map<String, String>> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest registerRequest) {
         if (userRepository.findByEmail(registerRequest.getEmail()) != null) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email already exists"));
         }
@@ -77,17 +93,26 @@ public class LoginController {
 
     }
 
+    /**
+     * Profile de l'utilisateur
+     * @return
+     */
     @GetMapping("/me")
     public ResponseEntity<?> getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Logger logger = Logger.getLogger("MyClassName");
         if (username == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated");
         }
         return customUserDetailsService.getUserByEmail(username);
     }
 
+    /**
+     * Modification de l'information sur le profile de l'utilisateur
+     * @param authentication
+     * @param updatedUser
+     * @return
+     */
     @PutMapping("/me")
     public ResponseEntity<User> updateUser(Authentication authentication, @RequestBody User updatedUser) {
         User user = userRepository.findByEmail(authentication.getName());
@@ -96,11 +121,18 @@ public class LoginController {
         }
         user.setUsername(updatedUser.getUsername());
         user.setEmail(updatedUser.getEmail());
-        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        if(updatedUser.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
         User savedUser = userRepository.save(user);
         return ResponseEntity.ok(savedUser);
     }
 
+    /**
+     * Utilisateur par id
+     * @param userId
+     * @return
+     */
     @GetMapping("/users/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable int userId) {
         User user = customUserDetailsService.findById(userId);

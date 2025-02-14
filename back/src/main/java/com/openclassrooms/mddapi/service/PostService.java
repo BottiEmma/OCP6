@@ -9,18 +9,23 @@ import com.openclassrooms.mddapi.repository.PostRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
+
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
-    public ResponseEntity<AllPostsResponse> getPosts(int userId){
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    public ResponseEntity<AllPostsResponse> getPosts(int userId) {
         List<Post> posts = (List<Post>) this.postRepository.findPostsByUserSubscriptions(userId);
         List<PostResponse> postsResponses = posts.stream().map(post -> {
             PostResponse postResponse = new PostResponse();
@@ -36,7 +41,12 @@ public class PostService {
         return ResponseEntity.ok(allPostsResponse);
     }
 
-    public ResponseEntity<PostResponse> getPost(Post post){
+    /**
+     *
+     * @param post
+     * @return
+     */
+    public ResponseEntity<PostResponse> getPost(Post post) {
         PostResponse postResponse = new PostResponse();
         postResponse.setId(post.getId());
         postResponse.setDate(post.getDate());
@@ -47,10 +57,23 @@ public class PostService {
         return ResponseEntity.ok(postResponse);
     }
 
+    /**
+     *
+     * @param postId
+     * @return
+     */
     public Post getById(int postId) {
         return postRepository.findById(postId).get();
     }
 
+    /**
+     *
+     * @param author
+     * @param subject
+     * @param title
+     * @param content
+     * @return
+     */
     public Post createPost(User author, Subject subject, String title, String content) {
         Post post = new Post();
         post.setAuthor(author);

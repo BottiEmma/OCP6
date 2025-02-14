@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -29,11 +28,21 @@ public class CommentController {
         this.postRepository = postRepository;
     }
 
+    /**
+     * Tous les commentaires d'un post
+     * @param postId
+     * @return
+     */
     @GetMapping("/post/{postId}")
     public ResponseEntity<AllCommentsResponse> getComments(@PathVariable int postId) {
         return this.commentService.getCommentsByPost(postId);
     }
 
+    /**
+     * Créer un commentaire
+     * @param commentRequest
+     * @return
+     */
     @PostMapping
     public ResponseEntity<Comment> createComment(@RequestBody CommentRequest commentRequest) {
         User author = userRepository.findById(commentRequest.getUserId())

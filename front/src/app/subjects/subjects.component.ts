@@ -3,7 +3,6 @@ import {Observable} from "rxjs";
 import {Subject} from "../interfaces/subject.interface";
 import {SubjectService} from "../services/subject.service";
 import {UserService} from "../services/user.service";
-import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../services/auth.service";
 import {User} from "../interfaces/user.interface";
 

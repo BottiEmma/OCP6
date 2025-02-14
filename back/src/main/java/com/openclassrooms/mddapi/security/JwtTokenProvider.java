@@ -20,6 +20,11 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long expiration;
 
+    /**
+     * Génération du token
+     * @param authentication
+     * @return
+     */
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
         Date now = new Date();

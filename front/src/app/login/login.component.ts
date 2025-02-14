@@ -27,7 +27,7 @@ export class LoginComponent {
         next: (token) => {
           console.log('Login successful, token:', token);
 
-          // Store the JWT token
+          // Garde le token JWT
           localStorage.setItem('token', token.token);
           this.userService.getCurrentUser().subscribe((u: User) => {
             this.authService.login(u, token.token);

@@ -17,6 +17,12 @@ import { HeaderComponent } from './header/header.component';
 import {AuthInterceptor} from "./interceptors/auth.interceptor";
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent, DetailComponent, FormComponent, ListComponent, SubjectsComponent, HeaderComponent, RegisterComponent, ProfileComponent],
@@ -29,7 +35,13 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     AsyncPipe,
     NgForOf,
-    FormsModule
+    FormsModule,
+    MatCardModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent],

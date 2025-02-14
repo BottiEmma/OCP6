@@ -1,0 +1,29 @@
+
+
+<div class="profile">
+  <h1>Profil utilisateur</h1>
+<mat-form-field class="form-group" appearance="outline">
+<input matInput [(ngModel)]="user.username" />
+</mat-form-field>
+<mat-form-field class="form-group" appearance="outline">
+<input matInput [(ngModel)]="user.email" />
+</mat-form-field>
+<mat-form-field class="form-group" appearance="outline">
+  <mat-label>Mot de passe</mat-label>
+<input matInput [(ngModel)]="user.password" />
+</mat-form-field>
+
+<button  mat-raised-button color="primary" (click)="save()">Sauvegarder</button>
+
+<a (click)="logout() " class="logout">Se déconnecter</a>
+</div>
+<hr style="width:90%;text-align:center">
+<h1>Abonnements</h1>
+  <div *ngFor="let subject of subjects$ | async">
+    <mat-card appearance="outlined" class="cards">
+      <mat-card-title>{{ subject.title }}</mat-card-title>
+      <mat-card-content><p>Description: {{ subject.description }}</p></mat-card-content>
+    <button mat-raised-button color="primary" (click)="unsubscribe(subject.id)" class="abonner">Se désabonner</button>
+    </mat-card>
+  </div>
+

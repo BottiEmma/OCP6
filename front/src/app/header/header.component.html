@@ -1,0 +1,27 @@
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle" />
+  <header class="header">
+    <span *ngIf="!isAuthenticated" ><a class="a" routerLink="/" style="text-decoration:none"><mat-icon [inline]="true">keyboard_backspace</mat-icon></a></span>
+
+    <nav>
+      <img *ngIf="!isAuthenticated" src="/assets/logo_p6.png" alt="logo" class="imgHome" />
+      <img *ngIf="isAuthenticated" src="/assets/logo_p6.png" alt="logo" class="imgMain" />
+    <div class="el">
+        <a style="text-decoration:none" *ngIf="isAuthenticated" routerLink="/posts">Articles</a>
+        <a style="text-decoration:none" *ngIf="isAuthenticated" routerLink="/subjects">Thèmes</a>
+        <span class="material-symbols-outlined"><a *ngIf="isAuthenticated" routerLink="/profile" class="profile"  style="text-decoration:none">account_circle</a></span>
+    </div>
+      <div ><button type="button" mat-button (click)="drawer.toggle()" [class.hidden]="drawer.opened" class="reorder"> <mat-icon *ngIf="isAuthenticated"  [inline]="true">reorder</mat-icon></button></div>
+    </nav>
+    <hr *ngIf="isAuthenticated" class="mainhr">
+    <hr *ngIf="!isAuthenticated" class="unloghr">
+    <span *ngIf="!isAuthenticated" ><a class="b" routerLink="/" style="text-decoration:none"><mat-icon [inline]="true">keyboard_backspace</mat-icon></a></span>
+  </header>
+
+  <mat-drawer-container class="container" autosize [class.open]="drawer.opened" (click)="closeSidenav()">
+    <mat-drawer  #drawer mode="over" class="sidenav" position="end" (click)="$event.stopPropagation()">
+      <p ><a style="text-decoration:none" *ngIf="isAuthenticated" routerLink="/posts" (click)="drawer.close()">Articles</a></p>
+      <p><a style="text-decoration:none" *ngIf="isAuthenticated" routerLink="/subjects" (click)="drawer.close()">Thèmes</a></p>
+      <p><span class="material-symbols-outlined"><a *ngIf="isAuthenticated" routerLink="/profile" class="profile-nav"  style="text-decoration:none" (click)="drawer.close()">account_circle</a></span></p>
+    </mat-drawer>
+
+  </mat-drawer-container>

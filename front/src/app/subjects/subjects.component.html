@@ -1,0 +1,9 @@
+
+
+  <div *ngFor="let subject of (subjects$ | async); index as i">
+    <mat-card appearance="outlined" class="cards">
+      <mat-card-title>{{ subject.title }}</mat-card-title>
+      <mat-card-content><p>Description: {{ subject.description }}</p></mat-card-content>
+    <button mat-raised-button color="primary" (click)="toggleSubscription(subject.id)" class="abonner">
+      {{ isSubscribed(subject.id) ? 'Se désabonner' : 'S\'abonner' }}
+    </button></mat-card></div>
